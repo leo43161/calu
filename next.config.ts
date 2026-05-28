@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
    * cuando se accede desde un origen distinto a localhost.
    * Solo afecta a `next dev`, no al build de producción.
    */
+  output: 'export',
   allowedDevOrigins: ["10.20.20.5"],
 };
 
