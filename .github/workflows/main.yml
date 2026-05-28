@@ -68,6 +68,7 @@ jobs:
           username: ${{ secrets.PANEL_USERNAME }}
           password: ${{ secrets.PANEL_PASSWORD }}
           port: 21
+          protocol: ftps
           local-dir: ./upload_dir/ # <-- Le decimos exactamente qué archivo subir
           server-dir: /public_html/calu/ # <-- La carpeta de destino en tu servidor
 
