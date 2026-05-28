@@ -1,0 +1,20 @@
+﻿node.exe : ⚠ Port 3000 is in use by an unknown process, using available port 3003 instead.
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\Usuario\AppData\Roamin ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (⚠ Port 3000 is ...t 3003 instead.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3003
+- Network:       http://169.254.83.107:3003
+✓ Ready in 1819ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3002
+- PID:          16944
+- Dir:          E:\leo\CALU\calu-catalogo\calu
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 16944 /F to stop it.
+[?25h
