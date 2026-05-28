@@ -71,6 +71,7 @@ jobs:
           protocol: ftps
           local-dir: ./upload_dir/ # <-- Le decimos exactamente qué archivo subir
           server-dir: /public_html/calu/ # <-- La carpeta de destino en tu servidor
+          timeout: 300000
 
       # 8. Llama al script PHP para que descomprima el archivo
       - name: Trigger unzip on server
