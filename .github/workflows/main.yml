@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.PANEL_PASSWORD }}
           protocol: ftps
           port: 21
-          security: strict
+          security: loose
           local-dir: ./upload_dir/
           server-dir: /public_html/calu/
 
