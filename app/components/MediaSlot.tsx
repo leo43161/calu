@@ -35,6 +35,8 @@ type Props = {
   priority?: boolean;
   /** Sizes hint para responsive (ver next/image) */
   sizes?: string;
+  /** Si es false, el placeholder sin imagen tendrá fondo neutro sin textura. */
+  bgPlaceholder?: boolean;
 };
 
 export function MediaSlot({
@@ -48,6 +50,7 @@ export function MediaSlot({
   className = "",
   priority = false,
   sizes,
+  bgPlaceholder = true,
 }: Props) {
   const radius = rounded === "full" ? "rounded-full" : "rounded-[2px]";
 
@@ -64,7 +67,7 @@ export function MediaSlot({
 
   return (
     <div
-      className={`relative ${aspect} w-full overflow-hidden ${radius} ${placeholderBg} ${className}`}
+      className={`relative ${aspect} w-full overflow-hidden ${radius} ${ bgPlaceholder && placeholderBg} ${className}`}
     >
       {src ? (
         <Image

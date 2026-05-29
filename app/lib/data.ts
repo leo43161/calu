@@ -132,10 +132,10 @@ export const blends: Blend[] = [
     description:
       "Blend fresco y armonioso, con delicadas notas frutales y herbales. El té verde Gunpowder se fusiona con durazno, manzanilla y melisa, dando lugar a una infusión suave, revitalizante y equilibrada.",
     ingredients: [
-      { name: "Té verde Gunpowder", image: "" },
-      { name: "Durazno", image: "" },
-      { name: "Manzanilla", image: "" },
-      { name: "Melisa", image: "" },
+      { name: "Té verde Gunpowder", image: "/img/ingredientes/ritual-verde/te-verde.png" },
+      { name: "Durazno", image: "/img/ingredientes/ritual-verde/durazno.png" },
+      { name: "Manzanilla", image: "/img/ingredientes/ritual-verde/manzanilla.png" },
+      { name: "Melisa", image: "/img/ingredientes/ritual-verde/melisa.png" },
     ],
     pairings: [
       "Mini tostada artesanal con queso crema suave y lámina de durazno fresco",
@@ -151,10 +151,10 @@ export const blends: Blend[] = [
     description:
       "Blend sutil y floral, elaborado sobre una delicada base de té blanco Pai Mu Tan. Las notas de manzana, naranja y pétalos de rosa crean una infusión elegante, aromática y envolvente.",
     ingredients: [
-      { name: "Té blanco Pai Mu Tan", image: "" },
-      { name: "Manzana", image: "" },
-      { name: "Naranja", image: "" },
-      { name: "Pétalos de rosa", image: "" },
+      { name: "Té blanco Pai Mu Tan", image: "/img/ingredientes/suspiro/te-blanco.png" },
+      { name: "Manzana", image: "/img/ingredientes/suspiro/manzana.png" },
+      { name: "Naranja", image: "/img/ingredientes/suspiro/naranja.png" },
+      { name: "Pétalos de rosa", image: "/img/ingredientes/suspiro/rosa.png" },
     ],
     pairings: [
       "Macarons de frambuesa y rosas",
@@ -170,11 +170,11 @@ export const blends: Blend[] = [
     description:
       "Blend cálido y especiado, con matices cítricos y vibrantes. La intensidad del Pu Erh se combina con jengibre, cardamomo, limón y bayas de goji, logrando una infusión profunda, reconfortante y aromática.",
     ingredients: [
-      { name: "Pu Erh", image: "" },
-      { name: "Jengibre", image: "" },
-      { name: "Cardamomo", image: "" },
-      { name: "Limón", image: "" },
-      { name: "Bayas de goji", image: "" },
+      { name: "Pu Erh", image: "/img/ingredientes/dorado/puerh.png" },
+      { name: "Jengibre", image: "/img/ingredientes/dorado/gengibre.png" },
+      { name: "Cardamomo", image: "/img/ingredientes/dorado/cardamomo.png" },
+      { name: "Limón", image: "/img/ingredientes/dorado/limon.png" },
+      { name: "Bayas de goji", image: "/img/ingredientes/dorado/goji.png" },
     ],
     pairings: [
       "Trufa de queso azul",
@@ -190,11 +190,11 @@ export const blends: Blend[] = [
     description:
       "Blend herbal delicado y equilibrado, con notas florales, frutales y refrescantes. Una armoniosa combinación de oolong, sauco, pera, hinojo y menta que invita a una experiencia suave y sensorial.",
     ingredients: [
-      { name: "Oolong", image: "" },
-      { name: "Sauco", image: "" },
-      { name: "Pera", image: "" },
-      { name: "Hinojo", image: "" },
-      { name: "Menta", image: "" },
+      { name: "Oolong", image: "/img/ingredientes/jardin/oolong.png" },
+      { name: "Sauco", image: "/img/ingredientes/jardin/sauco.png" },
+      { name: "Pera", image: "/img/ingredientes/jardin/pera.png" },
+      { name: "Hinojo", image: "/img/ingredientes/jardin/hinojo.png" },
+      { name: "Menta", image: "/img/ingredientes/jardin/menta.png" },
     ],
     pairings: [
       "Focaccia de hinojo",

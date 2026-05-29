@@ -79,13 +79,13 @@ export function BlendsMenu() {
                   <p className="text-[10px] uppercase tracking-[0.35em] text-antique-gold/70 mb-6">
                     Ingredientes
                   </p>
-                  <ul className="grid grid-cols-2 sm:grid-cols-3 gap-y-5 gap-x-6">
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-6">
                     {b.ingredients.map((ing) => (
                       <li
                         key={ing.name}
-                        className="flex items-center gap-4 text-sm text-silk-cream font-medium"
+                        className="flex items-center gap-1 text-sm text-silk-cream font-medium"
                       >
-                        <div className="w-12 h-12 flex-shrink-0">
+                        <div className="size-25 flex-shrink-0">
                           <MediaSlot
                             src={ing.image}
                             alt={ing.name}
@@ -94,6 +94,7 @@ export function BlendsMenu() {
                             variant="dark"
                             rounded="full"
                             sizes="48px"
+                            bgPlaceholder={false}
                           />
                         </div>
                         <span>{ing.name}</span>
