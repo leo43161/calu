@@ -72,7 +72,12 @@ jobs:
           security: strict
           local-dir: ./upload_dir/
           server-dir: /public_html/calu/
-      - name: Retry Deploy if Failed
+
+      - name: Retry Deploy if Failed (with delay)
+        if: failure()
+        run: sleep 10 # Wait 10 seconds before retry
+
+      - name: Retry Deploy if Failed - Attempt 2
         if: failure()
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
