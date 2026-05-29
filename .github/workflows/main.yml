@@ -67,14 +67,15 @@ jobs:
           server: ${{ secrets.PANEL_SERVER }}
           username: ${{ secrets.PANEL_USERNAME }}
           password: ${{ secrets.PANEL_PASSWORD }}
-          port: 21
-          local-dir: ./upload_dir/ # <-- Le decimos exactamente qué archivo subir
-          server-dir: /public_html/calu/ # <-- La carpeta de destino en tu servidor
+          port: 990
+          local-dir: ./upload_dir/
+          server-dir: /public_html/calu/
           security: strict
 
       # 8. Llama al script PHP para que descomprima el archivo
       - name: Trigger unzip on server
-        run: curl --fail "https://calu.com.ar/extract.php?secret=${{ secrets.UNZIP_SECRET }}"
+        run:
+          curl --fail "https://calu.com.ar/extract.php?secret=${{ secrets.UNZIP_SECRET }}"
 
           # --- OPCIONES MODIFICADAS ---
           # dangerous-clean-slate: true # <-- ELIMINADO
