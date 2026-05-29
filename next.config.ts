@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
    * Solo afecta a `next dev`, no al build de producción.
    */
   output: 'export',
+  images: {
+    unoptimized: true,
+  },
   allowedDevOrigins: ["10.20.20.5"],
 };
 

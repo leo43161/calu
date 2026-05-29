@@ -112,7 +112,7 @@ export function HoverGallery({
             openModal();
           }
         }}
-        className={`group relative ${aspect} w-full overflow-hidden rounded-[2px] ${placeholderBg} ${
+        className={`group relative ${aspect} w-full overflow-hidden rounded-xs ${placeholderBg} ${
           canExpand ? "cursor-zoom-in" : "cursor-default"
         } ${className}`}
       >
@@ -127,12 +127,11 @@ export function HoverGallery({
             className="absolute inset-0"
           >
             {activeItem?.src ? (
-              <Image
+              <img
                 src={activeItem.src}
                 alt={activeItem.alt}
-                fill
                 sizes={sizes}
-                className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]"
+                className="object-cover transition-transform duration-1200 ease-out group-hover:scale-[1.02] h-full w-full"
               />
             ) : (
               <div
@@ -144,8 +143,8 @@ export function HoverGallery({
           </motion.div>
         </AnimatePresence>
 
-        {/* Gradiente sutil para dar legibilidad a los indicadores */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-deep-teal/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* linear sutil para dar legibilidad a los indicadores */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-deep-teal/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Icono "ampliar" visible solo al hover */}
         {canExpand && (
@@ -251,7 +250,7 @@ function ImageModal({ items, initialIndex, onClose }: ModalProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[100] bg-deep-teal/95 backdrop-blur-md flex items-center justify-center p-6 sm:p-12"
+      className="fixed inset-0 z-100 bg-deep-teal/95 backdrop-blur-md flex items-center justify-center p-6 sm:p-12"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -283,7 +282,7 @@ function ImageModal({ items, initialIndex, onClose }: ModalProps) {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-full max-w-5xl aspect-[4/3]"
+        className="relative w-full max-w-5xl aspect-4/3"
         onClick={(e) => e.stopPropagation()}
       >
         <Image
