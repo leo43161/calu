@@ -70,7 +70,6 @@ jobs:
           port: 21
           local-dir: ./upload_dir/
           server-dir: /public_html/calu/
-          security: loose
 
       # 8. Llama al script PHP para que descomprima el archivo
       - name: Trigger unzip on server
