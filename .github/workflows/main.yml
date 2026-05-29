@@ -67,7 +67,21 @@ jobs:
           server: ${{ secrets.PANEL_SERVER }}
           username: ${{ secrets.PANEL_USERNAME }}
           password: ${{ secrets.PANEL_PASSWORD }}
+          protocol: ftps
           port: 21
+          security: strict
+          local-dir: ./upload_dir/
+          server-dir: /public_html/calu/
+      - name: Retry Deploy if Failed
+        if: failure()
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.PANEL_SERVER }}
+          username: ${{ secrets.PANEL_USERNAME }}
+          password: ${{ secrets.PANEL_PASSWORD }}
+          protocol: ftps
+          port: 21
+          security: strict
           local-dir: ./upload_dir/
           server-dir: /public_html/calu/
 
