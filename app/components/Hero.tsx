@@ -17,8 +17,8 @@ export function Hero() {
     >
       {/* Brillos orgánicos en las esquinas */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-60 -right-60 w-[50rem] h-[50rem] rounded-full bg-leaf/20 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-[35rem] h-[35rem] rounded-full bg-sage/10 blur-3xl" />
+        <div className="absolute -top-60 -right-60 w-200 h-200 rounded-full bg-leaf/20 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-140 h-140 rounded-full bg-sage/10 blur-3xl" />
       </div>
 
       {/* Línea decorativa horizontal */}

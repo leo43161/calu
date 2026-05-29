@@ -83,9 +83,9 @@ export function BlendsMenu() {
                     {b.ingredients.map((ing) => (
                       <li
                         key={ing.name}
-                        className="flex items-center gap-1 text-sm text-silk-cream font-medium"
+                        className="flex md:items-center md:flex-row flex-col items-center gap-1 text-sm text-silk-cream font-medium"
                       >
-                        <div className="size-25 flex-shrink-0">
+                        <div className="size-25 shrink-0">
                           <MediaSlot
                             src={ing.image}
                             alt={ing.name}

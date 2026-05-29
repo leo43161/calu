@@ -55,7 +55,7 @@ export function Services() {
             <motion.article
               key={s.id}
               variants={fadeUp}
-              className={`group relative flex flex-col bg-bone border border-charcoal/10 rounded-[2px] p-10 lg:p-12 transition-all duration-700 hover:border-deep-teal/30 hover:shadow-[0_30px_60px_-30px_rgba(13,57,60,0.2)] ${
+              className={`group relative flex flex-col bg-bone border border-charcoal/10 rounded-xs p-10 lg:p-12 transition-all duration-700 hover:border-deep-teal/30 hover:shadow-[0_30px_60px_-30px_rgba(13,57,60,0.2)] ${
                 i === 1 ? "lg:-translate-y-6" : ""
               }`}
             >
@@ -91,7 +91,7 @@ export function Services() {
                       key={item}
                       className="flex items-start gap-3 text-sm text-charcoal/90 font-medium"
                     >
-                      <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-leaf flex-shrink-0" />
+                      <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-leaf shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
