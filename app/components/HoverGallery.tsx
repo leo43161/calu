@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { Lightbox } from "./Lightbox";
 
 /* ------------------------------------------------------------------ */
 /*  HoverGallery — Galería interactiva con 3 modos:                    */
@@ -190,166 +190,17 @@ export function HoverGallery({
       {/* Modal */}
       <AnimatePresence>
         {modalOpen && canExpand && (
-          <ImageModal
+          <Lightbox
             items={itemsWithSrc}
             initialIndex={Math.max(
               0,
               itemsWithSrc.findIndex((i) => i.src === activeItem.src)
             )}
+            caption={label}
             onClose={() => setModalOpen(false)}
           />
         )}
       </AnimatePresence>
     </>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  ImageModal — Vista ampliada con navegación                         */
-/* ------------------------------------------------------------------ */
-
-type ModalProps = {
-  items: { src: string; alt: string }[];
-  initialIndex: number;
-  onClose: () => void;
-};
-
-function ImageModal({ items, initialIndex, onClose }: ModalProps) {
-  const [index, setIndex] = useState(initialIndex);
-
-  const next = useCallback(
-    () => setIndex((i) => (i + 1) % items.length),
-    [items.length]
-  );
-  const prev = useCallback(
-    () => setIndex((i) => (i - 1 + items.length) % items.length),
-    [items.length]
-  );
-
-  /* Bloquear scroll del body + teclas de navegación */
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      else if (e.key === "ArrowRight") next();
-      else if (e.key === "ArrowLeft") prev();
-    };
-    window.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [next, prev, onClose]);
-
-  const current = items[index];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-100 bg-deep-teal/95 backdrop-blur-md flex items-center justify-center p-6 sm:p-12"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Vista ampliada: ${current.alt}`}
-    >
-      {/* Cerrar */}
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Cerrar"
-        className="absolute top-6 right-6 w-12 h-12 rounded-full border border-silk-cream/30 text-silk-cream hover:bg-silk-cream/10 hover:border-silk-cream/60 transition-all duration-300 flex items-center justify-center z-10"
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
-      </button>
-
-      {/* Imagen */}
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.96 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-full max-w-5xl aspect-4/3"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Image
-          src={current.src}
-          alt={current.alt}
-          fill
-          sizes="(max-width: 1024px) 100vw, 80vw"
-          className="object-contain"
-          priority
-        />
-      </motion.div>
-
-      {/* Flechas */}
-      {items.length > 1 && (
-        <>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              prev();
-            }}
-            aria-label="Imagen anterior"
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-silk-cream/30 text-silk-cream hover:bg-silk-cream/10 hover:border-silk-cream/60 transition-all duration-300 flex items-center justify-center"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              next();
-            }}
-            aria-label="Imagen siguiente"
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-silk-cream/30 text-silk-cream hover:bg-silk-cream/10 hover:border-silk-cream/60 transition-all duration-300 flex items-center justify-center"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </button>
-        </>
-      )}
-
-      {/* Contador */}
-      {items.length > 1 && (
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-[0.35em] text-silk-cream/80"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
-        </div>
-      )}
-    </motion.div>
   );
 }

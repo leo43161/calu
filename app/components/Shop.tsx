@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeUp, stagger, reveal } from "../lib/motion";
 import { shopBlends, type ShopBlend } from "../lib/data";
 import { waLink } from "../lib/whatsapp";
+import { Lightbox, type LightboxItem } from "./Lightbox";
 
 /**
  * Shop — Venta de blends 50g.
@@ -96,9 +97,22 @@ type ProductCardProps = {
 
 function ProductCard({ product: p, index }: ProductCardProps) {
   const [flipped, setFlipped] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const tone = p.tone ?? "dark";
   const cardBg = tone === "dark" ? "bg-deep-teal" : "bg-antique-gold/90";
   const cardRing = tone === "dark" ? "ring-antique-gold/25" : "ring-deep-teal/20";
+
+  /* Caras con imagen real → alimentan el Lightbox */
+  const modalItems: LightboxItem[] = [
+    p.front && { src: p.front, alt: p.imageAlt ?? `Diseño frente ${p.name}` },
+    p.back && { src: p.back, alt: `Diseño reverso ${p.name}` },
+  ].filter(Boolean) as LightboxItem[];
+  const canOpen = modalItems.length > 0;
+
+  const handleClick = () => {
+    if (canOpen) setModalOpen(true);
+    else setFlipped((f) => !f); // sin imágenes aún → solo gira la ficha placeholder
+  };
 
   return (
     <motion.article variants={fadeUp} className="group flex flex-col">
@@ -112,14 +126,20 @@ function ProductCard({ product: p, index }: ProductCardProps) {
         </span>
       </div>
 
-      {/* Flip card */}
+      {/* Flip card — hover gira (preview), click abre el modal */}
       <button
         type="button"
-        onClick={() => setFlipped((f) => !f)}
+        onClick={handleClick}
         onMouseEnter={() => setFlipped(true)}
         onMouseLeave={() => setFlipped(false)}
-        aria-label={`Ver ${flipped ? "frente" : "reverso"} del diseño ${p.name}`}
-        className="relative block w-full text-left [perspective:1400px] cursor-pointer"
+        aria-label={
+          canOpen
+            ? `Ampliar diseño del blend ${p.name}`
+            : `Ver reverso del diseño ${p.name}`
+        }
+        className={`relative block w-full text-left [perspective:1400px] ${
+          canOpen ? "cursor-zoom-in" : "cursor-pointer"
+        }`}
       >
         <div
           className="relative w-full aspect-[3/5] transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d]"
@@ -152,13 +172,19 @@ function ProductCard({ product: p, index }: ProductCardProps) {
         {/* Sombra de piso */}
         <div className="pointer-events-none mx-auto mt-2 h-4 w-3/4 rounded-[50%] bg-charcoal/15 blur-md opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
 
-        {/* Hint flip — solo visible al inicio en mobile */}
+        {/* Hint — visible en mobile */}
         <span className="sm:hidden absolute top-3 right-3 z-10 inline-flex items-center gap-1 bg-bone/90 backdrop-blur-sm border border-charcoal/10 rounded-full px-2 py-1 text-[9px] uppercase tracking-[0.25em] text-charcoal/70">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-            <path d="M3 12a9 9 0 1 0 3-6.7" />
-            <path d="M3 4v5h5" />
-          </svg>
-          Toca
+          {canOpen ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+              <path d="M3 12a9 9 0 1 0 3-6.7" />
+              <path d="M3 4v5h5" />
+            </svg>
+          )}
+          {canOpen ? "Ampliar" : "Toca"}
         </span>
       </button>
 
@@ -188,6 +214,17 @@ function ProductCard({ product: p, index }: ProductCardProps) {
           </span>
         </a>
       </div>
+
+      {/* Modal del diseño */}
+      <AnimatePresence>
+        {modalOpen && canOpen && (
+          <Lightbox
+            items={modalItems}
+            caption={p.name}
+            onClose={() => setModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.article>
   );
 }
