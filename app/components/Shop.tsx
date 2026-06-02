@@ -242,9 +242,7 @@ function CardFace({
             alt={alt}
             onLoad={() => setLoaded(true)}
             onError={() => setErrored(true)}
-            className={`relative z-10 w-full h-full object-cover object-center transition-opacity duration-700 ${
-              loaded ? "opacity-100" : "opacity-0"
-            }`}
+            className={`relative z-10 w-full h-full object-cover object-center transition-opacity duration-700 opacity-100`}
             draggable={false}
           />
         )}
