@@ -57,7 +57,7 @@ export function BlendsMenu() {
             <motion.article
               key={b.id}
               variants={fadeUp}
-              className="grid lg:grid-cols-12 gap-10 lg:gap-16 pb-20 lg:pb-24 border-b border-silk-cream/10 last:border-b-0 last:pb-0"
+              className="grid lg:grid-cols-12 gap-10 lg:gap-16 pb-20 lg:pb-15 border-b border-silk-cream/10 last:border-b-0 last:pb-0"
             >
               {/* Columna izquierda: nombre + descripción + ingredientes */}
               <div className="lg:col-span-7 space-y-8">
@@ -122,14 +122,14 @@ export function BlendsMenu() {
                   </ul>
                 </div>
 
-                <MediaSlot
+                {/* <MediaSlot
                   src={b.image}
                   alt={b.imageAlt ?? b.name}
                   aspect="aspect-[4/3]"
                   label={`Foto ${b.name}`}
                   variant="dark"
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                />
+                /> */}
               </div>
             </motion.article>
           ))}
