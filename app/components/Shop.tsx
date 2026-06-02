@@ -99,7 +99,7 @@ function ProductCard({ product: p, index }: ProductCardProps) {
   const tone = p.tone ?? "dark";
   const cardBg = tone === "dark" ? "bg-deep-teal" : "bg-antique-gold/90";
   const cardRing = tone === "dark" ? "ring-antique-gold/25" : "ring-deep-teal/20";
-console.log({ p });
+
   return (
     <motion.article variants={fadeUp} className="group flex flex-col">
       {/* Etiqueta de edición */}
