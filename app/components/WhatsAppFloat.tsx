@@ -10,10 +10,22 @@ export function WhatsAppFloat() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 300);
+    const onScroll = () => {
+      const scrolledPast = window.scrollY > 300;
+      const distanceToBottom =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight);
+      // Ocultar al acercarse al footer para no tapar el banner de contacto del desarrollador.
+      const nearBottom = distanceToBottom < 320;
+      setVisible(scrolledPast && !nearBottom);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
