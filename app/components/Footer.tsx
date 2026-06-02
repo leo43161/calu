@@ -17,7 +17,7 @@ export function Footer() {
             </span>
           </p>
           <p className="text-steel font-normal max-w-md">
-            Buscamos generar {brand.values} en cada mesa.
+            Creamos experiencias que combinan calma, calidez, bienestar y elegancia.
           </p>
         </div>
 
