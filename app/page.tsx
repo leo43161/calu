@@ -4,6 +4,7 @@ import { Services } from "./components/Services";
 import { BlendsMenu } from "./components/BlendsMenu";
 import { Shop } from "./components/Shop";
 import { Footer } from "./components/Footer";
+import { WhatsAppFloat } from "./components/WhatsAppFloat";
 
 /**
  * Landing — Calu, el arte de servir té.
@@ -30,6 +31,7 @@ export default function Home() {
       <BlendsMenu />
       <Shop />
       <Footer />
+      <WhatsAppFloat />
     </main>
   );
 }

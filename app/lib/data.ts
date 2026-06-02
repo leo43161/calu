@@ -210,17 +210,36 @@ export type ShopBlend = {
   id: string;
   name: string;
   short: string;
-  /** Foto del packaging vertical 3:4 */
-  image?: string;
+  /**
+   * Diseño del frente del packaging (vertical ~3:5).
+   * Convención: /img/packaging/{id}-front.png
+   */
+  front?: string;
+  /**
+   * Diseño del reverso del packaging (vertical ~3:5).
+   * Convención: /img/packaging/{id}-back.png
+   */
+  back?: string;
+  /** Tonalidad dominante del frente del diseño: "dark" (teal) o "light" (dorado). */
+  tone?: "dark" | "light";
   imageAlt?: string;
+};
+
+const SHOP_TONE: Record<string, "dark" | "light"> = {
+  "ritual-verde": "dark",
+  "suspiro-en-flor": "light",
+  "ritual-dorado": "light",
+  "jardin-secreto": "dark",
 };
 
 export const shopBlends: ShopBlend[] = blends.map((b) => ({
   id: b.id,
   name: b.name,
   short: b.description.split(".").slice(0, 1).join(".") + ".",
-  image: "", // ej: "/images/shop/ritual-verde.jpg"
-  imageAlt: `Packaging 50g ${b.name}`,
+  front: `/img/packaging/${b.id}-front.jpg`,
+  back: `/img/packaging/${b.id}-back.jpg`,
+  tone: SHOP_TONE[b.id] ?? "dark",
+  imageAlt: `Diseño del packaging 50g ${b.name}`,
 }));
 
 /* ===================== METADATOS DE MARCA ===================== */

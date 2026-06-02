@@ -53,11 +53,18 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="max-w-xl text-lg leading-relaxed text-silk-cream/85 font-normal"
+            className="max-w-xl font-serif text-2xl sm:text-3xl leading-[1.2] text-silk-cream"
           >
-            Una mesa de té pensada como un ritual. Blends de autor, vajilla
-            cuidada y un servicio que transforma cualquier encuentro en una
-            experiencia sensorial y memorable.
+            Experiencias de té{" "}
+            <span className="italic text-antique-gold">guiadas y personalizadas</span>.
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            className="max-w-xl text-base lg:text-lg leading-relaxed text-silk-cream/80 font-normal"
+          >
+            Creamos momentos memorables para eventos sociales, corporativos y
+            encuentros entre amigas.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5">
