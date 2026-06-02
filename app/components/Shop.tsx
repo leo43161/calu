@@ -69,7 +69,7 @@ export function Shop() {
         >
           <span className="inline-block w-10 h-px bg-antique-gold/60" />
           <span className="text-[10px] uppercase tracking-[0.35em] text-charcoal/55">
-            Adelanto del diseño · Edición 2026 · Pasá el cursor para ver el reverso
+            Edición 2026 · Pasá el cursor para ver el reverso
           </span>
         </motion.div>
 
@@ -104,8 +104,8 @@ function ProductCard({ product: p, index }: ProductCardProps) {
 
   /* Caras con imagen real → alimentan el Lightbox */
   const modalItems: LightboxItem[] = [
-    p.front && { src: p.front, alt: p.imageAlt ?? `Diseño frente ${p.name}` },
-    p.back && { src: p.back, alt: `Diseño reverso ${p.name}` },
+    p.front && { src: p.front, alt: p.imageAlt ?? `Frente ${p.name}` },
+    p.back && { src: p.back, alt: `Reverso ${p.name}` },
   ].filter(Boolean) as LightboxItem[];
   const canOpen = modalItems.length > 0;
 
@@ -122,7 +122,7 @@ function ProductCard({ product: p, index }: ProductCardProps) {
           {String(index + 1).padStart(2, "0")} / {String(4).padStart(2, "0")}
         </span>
         <span className="text-[9px] uppercase tracking-[0.3em] text-antique-gold/80">
-          Diseño
+          
         </span>
       </div>
 
@@ -134,8 +134,8 @@ function ProductCard({ product: p, index }: ProductCardProps) {
         onMouseLeave={() => setFlipped(false)}
         aria-label={
           canOpen
-            ? `Ampliar diseño del blend ${p.name}`
-            : `Ver reverso del diseño ${p.name}`
+            ? `Ampliar blend ${p.name}`
+            : `Ver reverso ${p.name}`
         }
         className={`relative block w-full text-left [perspective:1400px] ${
           canOpen ? "cursor-zoom-in" : "cursor-pointer"
@@ -148,7 +148,7 @@ function ProductCard({ product: p, index }: ProductCardProps) {
           {/* FRENTE */}
           <CardFace
             src={p.front}
-            alt={p.imageAlt ?? `Diseño frente ${p.name}`}
+            alt={p.imageAlt ?? `Frente ${p.name}`}
             tone={tone}
             cardBg={cardBg}
             cardRing={cardRing}
@@ -159,7 +159,7 @@ function ProductCard({ product: p, index }: ProductCardProps) {
           {/* REVERSO */}
           <CardFace
             src={p.back}
-            alt={`Diseño reverso ${p.name}`}
+            alt={`Reverso ${p.name}`}
             tone={tone}
             cardBg={cardBg}
             cardRing={cardRing}
@@ -306,7 +306,7 @@ function CardFace({
                 tone === "dark" ? "text-silk-cream/50" : "text-deep-teal/50"
               }`}
             >
-              Diseño próximamente
+
             </span>
           </div>
         )}
