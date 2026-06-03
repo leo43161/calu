@@ -16,7 +16,7 @@ export function WhatsAppFloat() {
         document.documentElement.scrollHeight -
         (window.scrollY + window.innerHeight);
       // Ocultar al acercarse al footer para no tapar el banner de contacto del desarrollador.
-      const nearBottom = distanceToBottom < 320;
+      const nearBottom = distanceToBottom < 100;
       setVisible(scrolledPast && !nearBottom);
     };
     onScroll();
