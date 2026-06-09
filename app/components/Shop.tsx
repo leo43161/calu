@@ -1,17 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { fadeUp, stagger, reveal } from "../lib/motion";
 import { shopBlends, type ShopBlend } from "../lib/data";
 import { waLink } from "../lib/whatsapp";
-import { Lightbox, type LightboxItem } from "./Lightbox";
+import { HoverGallery } from "./HoverGallery";
 
 /**
  * Shop — Venta de blends 50g.
- * Tratamiento diegético: los archivos de diseño del packaging se muestran
- * como "fichas" (no como fotos truchas). Cada ficha es un flip-card 3D:
- * frente → reverso con la información técnica del blend.
+ * Cada ficha muestra una galería interactiva (foto real → frente → reverso)
+ * con la misma interacción que la sección Servicios, pero con proporción
+ * vertical 3:5 acorde al packaging.
  */
 export function Shop() {
   return (
@@ -69,7 +68,7 @@ export function Shop() {
         >
           <span className="inline-block w-10 h-px bg-antique-gold/60" />
           <span className="text-[10px] uppercase tracking-[0.35em] text-charcoal/55">
-            Edición 2026 · Pasá el cursor para ver el reverso
+            Edición 2026 · Pasá el cursor por las imágenes
           </span>
         </motion.div>
 
@@ -96,97 +95,25 @@ type ProductCardProps = {
 };
 
 function ProductCard({ product: p, index }: ProductCardProps) {
-  const [flipped, setFlipped] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const tone = p.tone ?? "dark";
-  const cardBg = tone === "dark" ? "bg-deep-teal" : "bg-antique-gold/90";
-  const cardRing = tone === "dark" ? "ring-antique-gold/25" : "ring-deep-teal/20";
-
-  /* Caras con imagen real → alimentan el Lightbox */
-  const modalItems: LightboxItem[] = [
-    p.front && { src: p.front, alt: p.imageAlt ?? `Frente ${p.name}` },
-    p.back && { src: p.back, alt: `Reverso ${p.name}` },
-  ].filter(Boolean) as LightboxItem[];
-  const canOpen = modalItems.length > 0;
-
-  const handleClick = () => {
-    if (canOpen) setModalOpen(true);
-    else setFlipped((f) => !f); // sin imágenes aún → solo gira la ficha placeholder
-  };
-
   return (
     <motion.article variants={fadeUp} className="group flex flex-col">
       {/* Etiqueta de edición */}
       <div className="flex items-center justify-between mb-3 px-1">
         <span className="text-[9px] uppercase tracking-[0.35em] text-charcoal/45">
-          {String(index + 1).padStart(2, "0")} / {String(4).padStart(2, "0")}
-        </span>
-        <span className="text-[9px] uppercase tracking-[0.3em] text-antique-gold/80">
-          
+          {String(index + 1).padStart(2, "0")} / {String(shopBlends.length).padStart(2, "0")}
         </span>
       </div>
 
-      {/* Flip card — hover gira (preview), click abre el modal */}
-      <button
-        type="button"
-        onClick={handleClick}
-        onMouseEnter={() => setFlipped(true)}
-        onMouseLeave={() => setFlipped(false)}
-        aria-label={
-          canOpen
-            ? `Ampliar blend ${p.name}`
-            : `Ver reverso ${p.name}`
-        }
-        className={`relative block w-full text-left [perspective:1400px] ${
-          canOpen ? "cursor-zoom-in" : "cursor-pointer"
-        }`}
-      >
-        <div
-          className="relative w-full aspect-[3/5] transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d]"
-          style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
-        >
-          {/* FRENTE */}
-          <CardFace
-            src={p.front}
-            alt={p.imageAlt ?? `Frente ${p.name}`}
-            tone={tone}
-            cardBg={cardBg}
-            cardRing={cardRing}
-            label={p.name}
-            fallbackLabel="Frente"
-          />
-
-          {/* REVERSO */}
-          <CardFace
-            src={p.back}
-            alt={`Reverso ${p.name}`}
-            tone={tone}
-            cardBg={cardBg}
-            cardRing={cardRing}
-            label={p.name}
-            fallbackLabel="Reverso"
-            back
-          />
-        </div>
-
-        {/* Sombra de piso */}
-        <div className="pointer-events-none mx-auto mt-2 h-4 w-3/4 rounded-[50%] bg-charcoal/15 blur-md opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-
-        {/* Hint — visible en mobile */}
-        <span className="sm:hidden absolute top-3 right-3 z-10 inline-flex items-center gap-1 bg-bone/90 backdrop-blur-sm border border-charcoal/10 rounded-full px-2 py-1 text-[9px] uppercase tracking-[0.25em] text-charcoal/70">
-          {canOpen ? (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-              <path d="M3 12a9 9 0 1 0 3-6.7" />
-              <path d="M3 4v5h5" />
-            </svg>
-          )}
-          {canOpen ? "Ampliar" : "Toca"}
-        </span>
-      </button>
+      {/* Galería vertical: foto real → frente → reverso.
+          autoplayMs=0 → solo cambia al pasar el cursor (o tocando los dots). */}
+      <HoverGallery
+        items={p.gallery}
+        aspect="aspect-[3/5]"
+        label={p.name}
+        variant="light"
+        autoplayMs={0}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+      />
 
       {/* Info */}
       <h3 className="font-serif font-semibold text-deep-teal text-2xl mt-6 mb-2 leading-tight">
@@ -214,106 +141,6 @@ function ProductCard({ product: p, index }: ProductCardProps) {
           </span>
         </a>
       </div>
-
-      {/* Modal del diseño */}
-      <AnimatePresence>
-        {modalOpen && canOpen && (
-          <Lightbox
-            items={modalItems}
-            caption={p.name}
-            onClose={() => setModalOpen(false)}
-          />
-        )}
-      </AnimatePresence>
     </motion.article>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-
-type CardFaceProps = {
-  src?: string;
-  alt: string;
-  tone: "dark" | "light";
-  cardBg: string;
-  cardRing: string;
-  label: string;
-  fallbackLabel: string;
-  back?: boolean;
-};
-
-function CardFace({
-  src,
-  alt,
-  tone,
-  cardBg,
-  cardRing,
-  label,
-  fallbackLabel,
-  back = false,
-}: CardFaceProps) {
-  const [loaded, setLoaded] = useState(false);
-  const [errored, setErrored] = useState(false);
-  const isPlaceholder = false;
-
-  return (
-    <div
-      className={`absolute inset-0 [backface-visibility:hidden] ${
-        back ? "[transform:rotateY(180deg)]" : ""
-      }`}
-    >
-      <div
-        className={`relative w-full h-full overflow-hidden ${cardBg} shadow-[0_30px_60px_-30px_rgba(13,57,60,0.4)]`}
-      >
-        {/* Marco interior decorativo (matchea el marco del diseño) */}
-        <div
-          className={`pointer-events-none absolute inset-3 border ${
-            tone === "dark" ? "" : ""
-          }`}
-        />
-
-        {/* Imagen del diseño */}
-        {!isPlaceholder && (
-          <img
-            src={src}
-            alt={alt}
-            onLoad={() => setLoaded(true)}
-            onError={() => setErrored(true)}
-            className={`relative z-10 w-full h-full object-cover object-center transition-opacity duration-700 opacity-100`}
-            draggable={false}
-          />
-        )}
-
-        {/* Placeholder elegante mientras carga o si falta el archivo */}
-        {(isPlaceholder || !loaded) && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
-            <span
-              className={`text-[9px] uppercase tracking-[0.4em] ${
-                tone === "dark" ? "text-antique-gold/80" : "text-deep-teal/70"
-              }`}
-            >
-              {fallbackLabel}
-            </span>
-            <span
-              className={`font-serif text-2xl ${
-                tone === "dark" ? "text-silk-cream" : "text-deep-teal"
-              }`}
-            >
-              {label}
-            </span>
-            <span
-              className={`text-[9px] uppercase tracking-[0.3em] ${
-                tone === "dark" ? "text-silk-cream/50" : "text-deep-teal/50"
-              }`}
-            >
-
-            </span>
-          </div>
-        )}
-
-        {/* Reflejo sutil */}
-        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/8 via-transparent to-black/15 mix-blend-overlay" />
-      </div>
-    </div>
   );
 }

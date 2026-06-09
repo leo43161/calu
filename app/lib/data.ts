@@ -211,36 +211,48 @@ export type ShopBlend = {
   name: string;
   short: string;
   /**
-   * Diseño del frente del packaging (vertical ~3:5).
-   * Convención: /img/packaging/{id}-front.png
+   * Galería ordenada del producto (aspect ~3:5 vertical):
+   *   1. Foto real del packaging
+   *   2. Diseño del frente
+   *   3. Diseño del reverso
    */
-  front?: string;
-  /**
-   * Diseño del reverso del packaging (vertical ~3:5).
-   * Convención: /img/packaging/{id}-back.png
-   */
-  back?: string;
-  /** Tonalidad dominante del frente del diseño: "dark" (teal) o "light" (dorado). */
-  tone?: "dark" | "light";
+  gallery: GalleryImage[];
   imageAlt?: string;
 };
 
-const SHOP_TONE: Record<string, "dark" | "light"> = {
-  "ritual-verde": "dark",
-  "suspiro-en-flor": "light",
-  "ritual-dorado": "light",
-  "jardin-secreto": "dark",
+/**
+ * Mapeo id del blend → prefijo del archivo de la foto real.
+ * Convención: /img/packaging/{prefijo}-1.jpg
+ */
+const SHOP_REAL_PREFIX: Record<string, string> = {
+  "ritual-verde": "ritual",
+  "suspiro-en-flor": "flor",
+  "ritual-dorado": "dorado",
+  "jardin-secreto": "jardin",
 };
 
-export const shopBlends: ShopBlend[] = blends.map((b) => ({
-  id: b.id,
-  name: b.name,
-  short: b.description.split(".").slice(0, 1).join(".") + ".",
-  front: `/img/packaging/${b.id}-front.jpg`,
-  back: `/img/packaging/${b.id}-back.jpg`,
-  tone: SHOP_TONE[b.id] ?? "dark",
-  imageAlt: `Diseño del packaging 50g ${b.name}`,
-}));
+export const shopBlends: ShopBlend[] = blends.map((b) => {
+  const realPrefix = SHOP_REAL_PREFIX[b.id];
+  const gallery: GalleryImage[] = [];
+  if (realPrefix) {
+    gallery.push({
+      src: `/img/packaging/${realPrefix}-1.jpg`,
+      alt: `Packaging ${b.name} — Foto real`,
+    });
+  }
+  gallery.push(
+    { src: `/img/packaging/${b.id}-front.jpg`, alt: `Frente del packaging ${b.name}` },
+    { src: `/img/packaging/${b.id}-back.jpg`, alt: `Reverso del packaging ${b.name}` }
+  );
+
+  return {
+    id: b.id,
+    name: b.name,
+    short: b.description.split(".").slice(0, 1).join(".") + ".",
+    gallery,
+    imageAlt: `Diseño del packaging 50g ${b.name}`,
+  };
+});
 
 /* ===================== METADATOS DE MARCA ===================== */
 export const brand = {

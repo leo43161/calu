@@ -32,7 +32,7 @@ type Props = {
   /** Texto del placeholder cuando no hay imagen */
   label?: string;
   variant?: Variant;
-  /** Milisegundos entre cambios automáticos (default 3500) */
+  /** Milisegundos entre cambios automáticos (default 3500). Usá 0 para desactivar el autoplay. */
   autoplayMs?: number;
   /** Sizes hint para next/image */
   sizes?: string;
@@ -53,9 +53,9 @@ export function HoverGallery({
   const [modalOpen, setModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  /* --- Auto-rotación cuando no hay hover --- */
+  /* --- Auto-rotación cuando no hay hover (autoplayMs <= 0 → desactivado) --- */
   useEffect(() => {
-    if (isHovered || items.length <= 1) return;
+    if (isHovered || items.length <= 1 || autoplayMs <= 0) return;
     const id = window.setInterval(() => {
       setActiveIndex((i) => (i + 1) % items.length);
     }, autoplayMs);
